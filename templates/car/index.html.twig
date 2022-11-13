@@ -4,11 +4,17 @@
 {% endblock %}
 
 {% block body %}
-	{{ form_start(form) }}
+	<div class="mt-4">
+		{{ form_start(form) }}
 
-	{{ form_end(form) }}
-
-	<table class="table">
+		{{ form_end(form) }}
+	</div>
+	<div class="count mt-4">
+		Il y a
+		{{ cars.getTotalItemCount }}
+		voitures
+	</div>
+	<table class="table m-4">
 		<thead>
 			<tr>
 				<th scope="col">Nom</th>
@@ -38,6 +44,6 @@
 	</tbody>
 </table>
 
-<div class="navigation">
+<div class="navigation d-flex justify-content-center">
 	{{ knp_pagination_render(cars) }}
 </div>{% endblock %}
