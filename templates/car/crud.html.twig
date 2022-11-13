@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CarController!
+{% endblock %}
+
+{% block body %}
+	<div class="mt-4">
+		{{ form_start(form) }}
+
+		{{ form_end(form) }}
+	</div>
+	<div class="count mt-4">
+		Il y a
+		{{ cars.getTotalItemCount }}
+		voitures
+	</div>
+	<div>
+		<button>
+			<a href="{{ path('app_car_create') }}">Ajouter une voiture</a>
+		</button>
+	</div>
+	<table class="table m-4">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Nombre de porte</th>
+				<th scope="col">Nombre de siège</th>
+				<th scope="col">Prix</th>
+				<th scope="col">Category</th>
+				<th scope="col">Modifier</th>
+				<th scope="col">Supprimer</th>
+
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for car in cars %}
+				<tr>
+					<th>{{car.name}}
+					</th>
+					<td>{{car.nbdoors}}</td>
+					<td>{{car.nbseats}}</td>
+					<td>{{car.cost}}
+						€
+					</td>
+					<td>{{car.category}}
+
+					</td>
+					<td>
+						<button>
+							<a href="{{ path('app_car_update') }}">Modifier une voiture</a>
+						</button>
+					</td>
+					<td>
+						<button>
+							<a href="{{ path('app_car_remove',{id : car.id }) }}">Supprimer une voiture</a>
+						</button>
+					</td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>
+
+<div class="navigation d-flex justify-content-center">
+	{{ knp_pagination_render(cars) }}
+</div>{% endblock %}
