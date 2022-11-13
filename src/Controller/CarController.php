@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Car;
 use App\Class\Search;
-
+use App\Form\CarType;
 use App\Form\SearchType;
+use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,22 +82,48 @@ class CarController extends AbstractController
     }
 
     #[Route('/admin/create', name: 'app_car_create')]
-    public function create(Request $request, PaginatorInterface $paginator): Response
+    public function create(Request $request): Response
     {
-        return $this->redirectToRoute('app_car_admin');
+        $car = new Car();
+        $form = $this->createForm(CarType::class, $car);
+        $form = $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            $this->entityManager->persist($data);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_car_admin');
+        }
+        return $this->renderForm('car/create.html.twig', [
+            'form' => $form,
+        ]);
     }
 
     #[Route('/admin/delete/{id}', name: 'app_car_remove')]
-    public function delete(Request $request, PaginatorInterface $paginator, Car $car): Response
+    public function delete(Car $car): Response
     {
         $this->entityManager->remove($car);
         $this->entityManager->flush();
         return $this->redirectToRoute('app_car_admin');
     }
 
-    #[Route('/admin/update', name: 'app_car_update')]
-    public function update(Request $request, PaginatorInterface $paginator): Response
+    #[Route('/admin/update/{id}', name: 'app_car_update')]
+    public function update(Request $request, CarRepository $repository, $id): Response
     {
-        return $this->redirectToRoute('app_car_admin');
+        $car = $repository->findOneBy(["id" => $id]);
+        $form = $this->createForm(CarType::class, $car);
+        $form = $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            $this->entityManager->persist($data);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_car_admin');
+        }
+
+        return $this->renderForm('car/create.html.twig', [
+            'form' => $form,
+        ]);
     }
 }
