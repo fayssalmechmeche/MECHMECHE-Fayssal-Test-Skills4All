@@ -14,7 +14,7 @@ class CarCategoryFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $faker = Factory::create();
             $carCategory = new CarCategory();
             $carCategory->setName($faker->name());

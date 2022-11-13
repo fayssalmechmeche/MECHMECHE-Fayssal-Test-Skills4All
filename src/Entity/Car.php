@@ -25,6 +25,10 @@ class Car
     #[ORM\Column]
     private ?float $cost = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cars')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CarCategory $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +78,18 @@ class Car
     public function setCost(float $cost): self
     {
         $this->cost = $cost;
+
+        return $this;
+    }
+
+    public function getCategory(): ?CarCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?CarCategory $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

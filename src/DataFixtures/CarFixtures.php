@@ -17,10 +17,12 @@ class CarFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $faker = Factory::create();
             $car = new Car();
+            $number = $faker->randomElement([1, 2, 3, 4]);
             $car->setName($faker->name());
-            $car->setNbSeats($faker->randomElement([1, 2, 3, 4]));
-            $car->setNbDoors($faker->randomElement([1, 2, 3, 4]));
+            $car->setNbSeats($number);
+            $car->setNbDoors($number);
             $car->setCost($faker->randomDigitNotNull());
+
             $manager->persist($car);
         }
         $manager->flush();

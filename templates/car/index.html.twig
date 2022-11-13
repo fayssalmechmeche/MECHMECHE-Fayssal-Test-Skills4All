@@ -1,20 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CarController!{% endblock %}
+{% block title %}Hello CarController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	{{ form_start(form) }}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	{{ form_end(form) }}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Test-Skills4All/src/Controller/CarController.php'|file_link(0) }}">src/Controller/CarController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Test-Skills4All/templates/car/index.html.twig'|file_link(0) }}">templates/car/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Nombre de porte</th>
+				<th scope="col">Nombre de siège</th>
+				<th scope="col">Prix</th>
+				<th scope="col">Category</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for car in cars %}
+				<tr>
+					<th>{{car.name}}
+					</th>
+					<td>{{car.nbdoors}}</td>
+					<td>{{car.nbseats}}</td>
+					<td>{{car.cost}}
+						€
+					</td>
+					<td>{{car.category}}
+
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>
+
+<div class="navigation">
+	{{ knp_pagination_render(cars) }}
+</div>{% endblock %}
