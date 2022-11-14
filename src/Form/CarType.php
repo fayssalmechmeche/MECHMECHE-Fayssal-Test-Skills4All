@@ -18,14 +18,35 @@ class CarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nbSeats', IntegerType::class)
-            ->add('nbDoors', IntegerType::class)
-            ->add('name', TextType::class)
-            ->add('cost', IntegerType::class)
+            ->add('nbSeats', IntegerType::class, [
+
+                "label" => "Nombre de siège : "
+
+
+            ])
+            ->add('nbDoors', IntegerType::class, [
+
+                "label" => "Nombre de porte : "
+
+
+            ])
+            ->add('name', TextType::class, [
+
+                "label" => "Nom : "
+
+
+            ])
+            ->add('cost', IntegerType::class, [
+
+                "label" => "Prix : "
+
+
+            ])
             ->add('category', EntityType::class, [
 
                 'required' => false,
                 'class' => CarCategory::class,
+                "label" => "catégorie : "
 
 
             ])
