@@ -5,6 +5,7 @@
 
 {% block body %}
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
 		<a class="navbar-brand" href="{{ path('app_car') }}">Skills4All</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -40,8 +41,8 @@
 		voitures
 	</div>
 	<div class="d-flex justify-content-end">
-		<button>
-			<a href="{{ path('app_car_create') }}">Ajouter une voiture</a>
+		<button type="button" class="btn btn-success">
+			<a href="{{ path('app_car_create') }}" class="text-dark">Ajouter une voiture</a>
 		</button>
 	</div>
 	<table class="table m-4">
@@ -72,13 +73,13 @@
 
 					</td>
 					<td>
-						<button>
-							<a href="{{ path('app_car_update',{id : car.id }) }}">Modifier une voiture</a>
+						<button type="button" class="btn btn-primary">
+							<a href="{{ path('app_car_update',{id : car.id }) }}" class="text-dark">Modifier une voiture</a>
 						</button>
 					</td>
 					<td>
-						<button>
-							<a href="{{ path('app_car_remove',{id : car.id }) }}">Supprimer une voiture</a>
+						<button type="button" class="btn btn-danger">
+							<a href="{{ path('app_car_remove',{id : car.id }) }}" class="text-dark">Supprimer une voiture</a>
 						</button>
 					</td>
 
@@ -87,7 +88,5 @@
 		</tbody>
 	</tbody>
 </table>
-
 <div class="navigation d-flex justify-content-center">
-	{{ knp_pagination_render(cars) }}
-</div>{% endblock %}
+	{{ knp_pagination_render(cars) }}</div>{% endblock %}
