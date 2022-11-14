@@ -30,11 +30,10 @@ class CarType extends AbstractType
 
             ])
             ->add('submit', SubmitType::class, [
-                'label' => "Créer",
+                'label' => "Sauvegarder",
                 'attr' => [
                     'class' => 'btn-block btn-info'
                 ]
-
             ]);
     }
 

@@ -21,7 +21,7 @@ class SearchType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Votre recherche...',
-                    'class' => 'form-control-sm'
+                    'class' => 'form-control d-flex justify-content-end'
                 ]
             ])
             ->add('category', EntityType::class, [
@@ -29,12 +29,14 @@ class SearchType extends AbstractType
                 'required' => false,
                 'class' => CarCategory::class,
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' =>  true
+
+
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Filtrer",
                 'attr' => [
-                    'class' => 'btn-block btn-info'
+                    'class' => 'btn btn-outline-success my-2 my-sm-0 mt-4'
                 ]
 
             ]);

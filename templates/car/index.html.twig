@@ -4,46 +4,78 @@
 {% endblock %}
 
 {% block body %}
-	<div class="mt-4">
-		{{ form_start(form) }}
 
-		{{ form_end(form) }}
-	</div>
-	<div class="count mt-4">
-		Il y a
-		{{ cars.getTotalItemCount }}
-		voitures
-	</div>
-	<table class="table m-4">
-		<thead>
-			<tr>
-				<th scope="col">Nom</th>
-				<th scope="col">Nombre de porte</th>
-				<th scope="col">Nombre de siège</th>
-				<th scope="col">Prix</th>
-				<th scope="col">Category</th>
+	<div>
 
-			</tr>
-		</thead>
-		<tbody>
-			{% for car in cars %}
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="">Skills4All</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="">Accueil
+
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ path('app_car_admin') }}">Administration
+
+						</a>
+					</li>
+
+
+				</ul>
+
+				{{ form_start(form) }}
+				{{form_widget(form.string)}}
+				{{form_widget(form.category)}}
+				{{form_widget(form.submit)}}
+				{{ form_end(form) }}
+			</div>
+		</nav>
+
+
+		<div class="count mt-4">
+			Il y a
+			{{ cars.getTotalItemCount }}
+			voitures
+		</div>
+		<table class="table m-4">
+			<thead>
 				<tr>
-					<th>{{car.name}}
-					</th>
-					<td>{{car.nbdoors}}</td>
-					<td>{{car.nbseats}}</td>
-					<td>{{car.cost}}
-						€
-					</td>
-					<td>{{car.category}}
+					<th scope="col">Nom</th>
+					<th scope="col">Nombre de porte</th>
+					<th scope="col">Nombre de siège</th>
+					<th scope="col">Prix</th>
+					<th scope="col">Category</th>
 
-					</td>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</tbody>
-</table>
+			</thead>
+			<tbody>
+				{% for car in cars %}
+					<tr>
+						<th>{{car.name}}
+						</th>
+						<td>{{car.nbdoors}}</td>
+						<td>{{car.nbseats}}</td>
+						<td>{{car.cost}}
+							€
+						</td>
+						<td>{{car.category}}
 
-<div class="navigation d-flex justify-content-center">
-	{{ knp_pagination_render(cars) }}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+
+	<div class="navigation d-flex justify-content-center">
+		{{ knp_pagination_render(cars) }}
+	</div>
 </div>{% endblock %}

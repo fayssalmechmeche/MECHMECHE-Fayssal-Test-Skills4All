@@ -23,6 +23,7 @@ class CarFixtures extends Fixture
             $car->setNbDoors($number);
             $car->setCost($faker->randomDigitNotNull());
 
+
             $manager->persist($car);
         }
         $manager->flush();
