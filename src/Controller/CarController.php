@@ -6,7 +6,7 @@ use App\Entity\Car;
 use App\Class\Search;
 use App\Form\CarType;
 use App\Form\SearchType;
-use App\Service\WeatherAPI;
+
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -14,6 +14,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CarController extends AbstractController
@@ -24,29 +25,32 @@ class CarController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/', name: 'app_car')]
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request, PaginatorInterface $paginator, HttpClientInterface $client): Response
     {;
 
-        $service = new WeatherAPI();
-        $data = $service->getWeather();
+
+
+        $response = $client->request('GET', 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m&current_weather=true');
+        $content = $response->getContent();
+        $content = $response->toArray();
 
 
 
-        //$car = $this->entityManager->getRepository(Car::class)->findAll();
+
         $search = new Search();
         $form = $this->createForm(SearchType::class, $search);
         $form = $form->handleRequest($request);
         $cars = $paginator->paginate(
-            $this->entityManager->getRepository(Car::class)->findAll(), /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            5 /*limit per page*/
+            $this->entityManager->getRepository(Car::class)->findAll(),
+            $request->query->getInt('page', 1),
+            5
         );
         if ($form->isSubmitted() && $form->isValid()) {
-            //$cars = $this->entityManager->getRepository(Car::class)->findWithSearch($search);
+
             $cars = $paginator->paginate(
-                $this->entityManager->getRepository(Car::class)->findWithSearch($search), /* query NOT result */
-                $request->query->getInt('page', 1), /*page number*/
-                5 /*limit per page*/
+                $this->entityManager->getRepository(Car::class)->findWithSearch($search),
+                $request->query->getInt('page', 1),
+                5
             );
         }
 
@@ -57,7 +61,7 @@ class CarController extends AbstractController
         return $this->renderForm('car/index.html.twig', [
             'cars' => $cars,
             'form' => $form,
-            'data' => $data
+            "weather" => $content["current_weather"]["temperature"]
         ]);
     }
 
@@ -74,7 +78,7 @@ class CarController extends AbstractController
             5 /*limit per page*/
         );
         if ($form->isSubmitted() && $form->isValid()) {
-            //$cars = $this->entityManager->getRepository(Car::class)->findWithSearch($search);
+
             $cars = $paginator->paginate(
                 $this->entityManager->getRepository(Car::class)->findWithSearch($search), /* query NOT result */
                 $request->query->getInt('page', 1), /*page number*/
